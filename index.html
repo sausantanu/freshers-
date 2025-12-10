@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>BCA & BSc CS Farewell Invitation: Faculty Edition</title>
+  <style>
+    /* --- Variables --- */
+    :root{
+      --bg1:#021428; 
+      --bg2:#002a5c; 
+      --accent:#ffcc00; /* Primary gold/yellow */
+      --muted:rgba(255,255,255,0.08);
+      --card-bg: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+      --cta:#00d1ff; 
+      --danger:#ff6b6b;
+      --success: #3be985;
+      --game-color: #ff66aa; 
+      --dark-box-bg: rgba(0, 0, 0, 0.2); 
+      --dark-box-border: rgba(255, 255, 255, 0.05); 
+      --logo-color: #ff8c00; /* Orange color matching the original logo */
+    }
+    /* --- Reset & Base Styles --- */
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:'Inter', 'Poppins', system-ui, Arial, sans-serif;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:#fff
+    }
+
+    /* --- Layout --- */
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px 
+    }
+    .grid{
+      width:min(1100px,98%);
+      display:grid;
+      grid-template-columns:1fr 380px;
+      gap:20px
+    }
+
+    /* --- Main Card Styles --- */
+    .card{
+      background:linear-gradient(180deg,var(--card-bg), rgba(255,255,255,0.02));
+      padding:20px;
+      border-radius:14px;
+      backdrop-filter:blur(8px);
+      box-shadow:0 12px 40px rgba(0,0,0,0.5)
+    }
+
+    /* --- LOGO FIX (CSS Placeholder) --- */
+    .logo-container {
+        text-align: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--muted);
+    }
+    .college-logo-text {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--logo-color);
+        letter-spacing: 2px;
+        text-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
+        margin: 0;
+        text-transform: uppercase;
+    }
+    .college-motto {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 4px 0 0 0;
+    }
+
+    .top{
+      display:flex;
+      gap:16px;
+      align-items:center
+    }
+    .greet{flex:1}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:6px 0 12px 0;color:rgba(255,255,255,0.9)}
+
+    /* --- Input & Buttons (Same as before) --- */
+    input[type=text]{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      background:transparent;
+      border:1px solid var(--muted);
+      color:#fff;
+      font-size:16px;
+      transition:box-shadow 0.2s;
+    }
+    .controls{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+    .btn{
+      padding:10px 16px;
+      border-radius:10px;
+      border:none;
+      background:var(--accent);
+      color:#000;
+      font-weight:700;
+      cursor:pointer;
+      transition:background 0.2s, transform 0.1s;
+    }
+    .btn:active{transform:scale(0.98)}
+    #playNamaste{
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    
+    /* --- Countdown & Text Lines (Same as before) --- */
+    .countwrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+    .countbox{
+      display:flex;
+      gap:10px;
+      padding:12px;
+      border-radius:12px;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));
+    }
+    .digit{
+      min-width:72px;
+      padding:10px 12px;
+      border-radius:8px;
+      background:rgba(0,0,0,0.45);
+      text-align:center;
+      font-family:'Orbitron',sans-serif;
+      font-size:28px;
+      color:var(--accent);
+      box-shadow:0 6px 18px rgba(0,0,0,0.45), inset 0 -6px 18px rgba(255,255,255,0.02)
+    }
+    .label{
+      font-size:12px;
+      color:rgba(255,255,255,0.6);
+      text-align:center;
+      margin-top:6px
+    }
+    .lines{margin-top:16px;min-height:140px;overflow:auto}
+    .line{
+      font-size:17px;
+      margin:10px 0;
+      opacity:0;
+      transform:translateY(12px);
+      animation:lineIn .6s forwards
+    }
+    @keyframes lineIn{to{opacity:1;transform:translateY(0)}}
+
+    /* --- Right Column (Details + Emojis) --- */
+    .side{
+      background:linear-gradient(180deg,var(--card-bg), rgba(255,255,255,0.01));
+      padding:16px;
+      border-radius:12px
+    }
+    .side h3{margin:0 0 10px 0}
+    .detailBtns{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+    .detailBtn{
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      text-align:left;
+      font-weight:700;
+      cursor:pointer;
+      transition:transform 0.1s;
+    }
+    .detailBtn:active{transform:scale(0.99)}
+
+    .detailBtn.venue{background:linear-gradient(90deg,#6ce7b8,#00d1ff);color:#003}
+    .detailBtn.date{background:linear-gradient(90deg,#ffd76b,#ff8a00);color:#103}
+    .detailBtn.time{background:linear-gradient(90deg,#aab6ff,#6e9cff);color:#012}
+    .detailBtn.msg{background:linear-gradient(90deg,#ff9bb3,#ff6b6b);color:#200}
+
+    #detailBox{
+      min-height:60px;
+      padding:10px;
+      border-radius:8px;
+      background:rgba(0,0,0,0.25);
+      margin-top:6px;
+      color: var(--accent);
+    }
+
+    /* --- EMOJI/GIF section (UPDATED STYLES) --- */
+    .memeBox{
+      margin-top:14px;
+      border-radius:10px;
+      overflow:hidden;
+      background: var(--dark-box-bg); 
+      border: 1px solid var(--dark-box-border);
+      padding:10px;
+      text-align:center;
+    }
+    .emojiDisplay{
+      height:100px;
+      /* Font size changed to display the large emoji */
+      font-size:72px; 
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      background:rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+      transition: background 0.3s;
+      /* Removed previous text styling, using large emoji font size */
+    }
+    .memeText{padding:10px 0;font-size:14px;color:rgba(255,255,255,0.9);min-height:44px}
+    .memeBtn{
+      margin-top:8px;
+      padding:8px 12px;
+      border-radius:10px;
+      border:none;
+      background:var(--success); /* Changed color for 'Fun' button */
+      color:#000;
+      font-weight: 700;
+      cursor:pointer
+    }
+
+    /* --- GAME SECTION STYLES (Kept the same) --- */
+    .gameBox{
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 12px;
+        background: var(--dark-box-bg);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        border: 2px solid var(--dark-box-border); 
+    }
+    .gameBox h4 {
+        margin-top: 0;
+        color: var(--game-color); 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    /* Tab styles */
+    .gameTabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid var(--muted);
+        padding-bottom: 5px;
+    }
+    .gameTabs button {
+        flex: 1;
+        padding: 8px 5px;
+        border: none;
+        border-radius: 6px 6px 0 0;
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+    }
+    .gameTabs button.active {
+        background: var(--game-color);
+        color: #000;
+        font-weight: 700;
+    }
+    
+    .gameContent {
+        min-height: 200px; 
+        padding: 10px 0;
+        text-align: center;
+    }
+    .gamePane {
+        display: none;
+        text-align: center;
+    }
+    .gamePane.active {
+        display: block;
+    }
+
+    /* --- TIC TAC TOE STYLES --- */
+    #board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 180px;
+        height: 180px;
+        margin: 10px auto;
+        border: 2px solid var(--accent);
+    }
+    .cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        font-weight: bold;
+        color: var(--accent);
+        border: 1px solid var(--muted);
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 0.2s;
+    }
+    .cell:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    #tictactoe-status {
+        margin-top: 10px;
+        color: var(--success);
+        font-weight: 700;
+    }
+    .game-reset-btn {
+        background: var(--game-color);
+        color: #000;
+        font-weight: 700;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    /* --- NUMBER GUESSING GAME STYLES --- */
+    #guess-input {
+        width: 80px;
+        text-align: center;
+        margin: 10px auto;
+    }
+    #guess-result {
+        color: var(--cta);
+        margin: 10px 0;
+        min-height: 20px;
+    }
+    #guess-btn, #guess-reset-btn {
+        background: var(--game-color);
+        color: #000;
+        font-weight: 700;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    /* --- ROCK PAPER SCISSORS STYLES --- */
+    #rps-options button {
+        font-size: 24px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--muted);
+        border-radius: 8px;
+        padding: 10px;
+        margin: 5px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    #rps-options button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    #rps-result {
+        margin-top: 15px;
+        font-weight: 700;
+        color: var(--accent);
+        min-height: 30px;
+    }
+    #rps-score {
+        margin-top: 10px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* --- Final message --- */
+    .fullmsg{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        height:100vh;
+        text-align:center;
+        background:linear-gradient(135deg,#001f3f,#002a5c);
+    }
+    .fullmsg h2{font-size:28px; color: #fff;}
+
+    /* ------------------------------------- */
+    /* --- MOBILE RESPONSIVENESS ENHANCED --- */
+    /* ------------------------------------- */
+    @media(max-width:920px){
+      .grid{grid-template-columns:1fr} 
+      .wrap{padding:10px} 
+      .top{flex-direction:column; align-items:flex-start} 
+      .greet{width:100%; text-align:center; margin-bottom: 10px;} 
+      .countwrap{width:100%} 
+      .countbox{width:100%; justify-content:space-around} 
+      .digit{min-width:52px;font-size:20px}
+      .emojiDisplay{height:80px; font-size: 60px;} 
+    }
+
+    @media(max-width:480px){
+      .digit{min-width:40px; font-size:18px; padding:8px} 
+      .label{font-size:10px} 
+      .btn, .detailBtn, .memeBtn{font-size:14px; padding:10px 12px;} 
+      .detailBtns{gap:8px} 
+      .lines{min-height:100px} 
+      .line{font-size:16px}
+      .memeBox{padding:8px}
+      #board { width: 150px; height: 150px; }
+      .cell { font-size: 30px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;700;800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="grid">
+
+      <section class="card" aria-labelledby="inviteTitle">
+        
+        <div class="logo-container">
+            <p class="college-logo-text">Hijli College</p>
+            <p class="college-motto">Kharagpur • Work Is Worship</p>
+        </div>
+
+        <div class="top">
+          <div class="greet">
+            <h1 id="inviteTitle">Hearty Welcome, Dear Freshers! 🎉</h1>
+            <p class="lead">We, your seniors, invite you to the formal invitation for our triple celebration. Please enter your name.</p>
+          </div>
+          <div class="countwrap">
+            <div class="countbox" aria-hidden="true">
+              <div class="digit" id="days">00</div>
+              <div class="digit" id="hours">00</div>
+              <div class="digit" id="minutes">00</div>
+              <div class="digit" id="seconds">00</div>
+            </div>
+            <div style="display:flex;gap:8px;width:100%;justify-content:space-between">
+              <div class="label">Days</div>
+              <div class="label">Hours</div>
+              <div class="label">Mins</div>
+              <div class="label">Secs</div>
+            </div>
+          </div>
+        </div>
+
+        <input id="nameInput" type="text" placeholder="Your Name (e.g. New Student Sharma)" aria-label="Name" />
+        <div style="display:flex;gap:10px;margin-top:12px;align-items:center">
+          <button class="btn" id="startBtn">View Formal Invitation</button>
+          <button class="btn" id="playHello">🔊 Hello</button>
+        </div>
+
+        <div class="lines" id="lines" aria-live="polite"></div>
+      </section>
+
+      <aside class="side" aria-label="Event details">
+        <h3>Event Details 🗓️</h3>
+
+        <div class="detailBtns">
+          <button class="detailBtn venue" id="venueBtn">📍 Venue</button>
+          <button class="detailBtn date" id="dateBtn">📅 Date</button>
+          <button class="detailBtn time" id="timeBtn">⏰ Time</button>
+          <button class="detailBtn msg" id="messageBtn">💖 Senior's Welcome</button>
+        </div>
+
+        <div id="detailBox" aria-live="polite"></div>
+
+        <div class="memeBox">
+          <div class="emojiDisplay" id="emojiDisplay">
+            👋
+          </div>
+          <div class="memeText" id="memeText">Tap "Get a Hilarious Meme" to see how the seniors *really* feel about you joining. 😉</div>
+          <button class="memeBtn" id="newMemeBtn">Get a Hilarious Meme</button>
+        </div>
+
+        <div class="gameBox">
+            <h4>🕹️ Quick Academic Fun</h4>
+            
+            <div class="gameTabs">
+                <button class="tab-btn active" data-game="tictactoe">✖️ Tic-Tac-Toe</button>
+                <button class="tab-btn" data-game="numberguess">🔢 Guessing Game</button>
+                <button class="tab-btn" data-game="rps">✊ RPS</button>
+            </div>
+
+            <div class="gameContent">
+                
+                <div id="tictactoe" class="gamePane active">
+                    <p style="margin-bottom: 5px;">You are **X**. Try to beat the computer (O)!</p>
+                    <div id="board">
+                        <div class="cell" data-index="0"></div>
+                        <div class="cell" data-index="1"></div>
+                        <div class="cell" data-index="2"></div>
+                        <div class="cell" data-index="3"></div>
+                        <div class="cell" data-index="4"></div>
+                        <div class="cell" data-index="5"></div>
+                        <div class="cell" data-index="6"></div>
+                        <div class="cell" data-index="7"></div>
+                        <div class="cell" data-index="8"></div>
+                    </div>
+                    <div id="tictactoe-status">Current turn: X (You)</div>
+                    <button class="game-reset-btn" id="tictactoe-reset-btn">New Game</button>
+                </div>
+
+                <div id="numberguess" class="gamePane">
+                    <p style="margin-bottom: 10px;">Guess the number (1-100). You get 7 tries.</p>
+                    <input type="number" id="guess-input" placeholder="Enter Guess" min="1" max="100" />
+                    <button id="guess-btn">Submit Guess</button>
+                    <div id="guess-result">Start by entering a number above!</div>
+                    <p id="guess-tries">Tries remaining: 7</p>
+                    <button class="game-reset-btn" id="guess-reset-btn">Restart Game</button>
+                </div>
+
+                <div id="rps" class="gamePane">
+                    <p style="margin-bottom: 15px;">Challenge the system!</p>
+                    <div id="rps-options">
+                        <button data-move="rock">✊ Rock</button>
+                        <button data-move="paper">🖐️ Paper</button>
+                        <button data-move="scissors">✌️ Scissors</button>
+                    </div>
+                    <div id="rps-result">Make your move!</div>
+                    <div id="rps-score">Score: Player 0 - System 0</div>
+                    <button class="game-reset-btn" id="rps-reset-btn">Reset Score</button>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div style="margin-top:12px">
+          <button class="btn" id="continueBtn">I'm Ready to Attend</button>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+<script>
+  // ---- speech & typing helpers (Kept the same) ----
+  const synth = window.speechSynthesis;
+  function stopSpeech(){ try{ if(synth.speaking) synth.cancel(); }catch(e){} }
+  function speak(text){ 
+    stopSpeech(); 
+    const u=new SpeechSynthesisUtterance(text); 
+    u.rate=1; 
+    u.lang='en-IN'; 
+    synth.speak(u); 
+  }
+
+  let typingTimer=null;
+  function typeText(el, text){ 
+    if(typingTimer){ clearInterval(typingTimer); typingTimer=null;} 
+    stopSpeech(); 
+    el.textContent=''; 
+    let i=0; 
+    typingTimer=setInterval(()=>{ 
+      el.textContent += text.charAt(i) || ''; 
+      i++; 
+      if(i>text.length){ 
+        clearInterval(typingTimer); 
+        typingTimer=null; 
+      } 
+    },28); 
+  }
+
+  // ---- content (Kept the same) ----
+  const LINES = [
+    'Hey, Fresher! Get ready for the biggest event of the year. Your seniors are throwing a massive party just for you! 🥳',
+    'This is a triple-threat celebration: **Your Welcome** (the main event!), **Teachers\' Day** (showing appreciation), and a **Farewell** (we get rid of the old batch!). 🎓',
+    'Come join us to officially kick off your college journey. We promise the seniors won\'t make you do anything *too* embarrassing... yet. 😉',
+    'College life is like a new app—exciting, slightly confusing, and full of features. We’re here to give you the cheat codes. 🗝️',
+    'Your presence is mandatory for fun! Let\'s celebrate your entry, honor our faculty, and bid adieu to the graduating batch. 🤝',
+    'Your seniors are excited to meet you, guide you, and maybe exploit your free time (just kidding!). Don’t miss the fun, food, and mentorship! 🍕',
+    'Get your most colorful clothes ready! This event is all about making memories that will last until your own farewell. ✨',
+    'Welcome to Hijli College! We can\'t wait to see you there! ❤️'
+  ];
+
+  const VENUE = 'The Venue: G.S. Sanyal Memorial Hall, Hijli College (The place where the magic happens!)';
+  const DATE = 'The Date: Thursday, December 11, 2025 (Mark your calendar and set 10 alarms!)';
+  const TIME = 'The Time: 11:00 AM sharp (Being fashionably late is cool, but missing the snacks is not.)';
+  const SPECIAL = 'Welcome to the family! We, your seniors, are thrilled to welcome the next batch of superstars. College is an amazing adventure, and we are here to support you, mentor you, and ensure you have the best time. Embrace the chaos, study hard, and enjoy the party! See you soon!';
+
+  // ---- DOM refs (Updated to reflect new Hello button ID) ----
+  const daysEl = document.getElementById('days');
+  const hoursEl = document.getElementById('hours');
+  const minsEl = document.getElementById('minutes');
+  const secsEl = document.getElementById('seconds');
+  const nameInput = document.getElementById('nameInput');
+  const startBtn = document.getElementById('startBtn');
+  // CHANGED ID TO playHello
+  const playHello = document.getElementById('playHello'); 
+  const linesBox = document.getElementById('lines');
+  const venueBtn = document.getElementById('venueBtn');
+  const dateBtn = document.getElementById('dateBtn');
+  const timeBtn = document.getElementById('timeBtn');
+  const messageBtn = document.getElementById('messageBtn');
+  const detailBox = document.getElementById('detailBox');
+  const continueBtn = document.getElementById('continueBtn');
+  const newMemeBtn = document.getElementById('newMemeBtn');
+  const emojiDisplay = document.getElementById('emojiDisplay');
+  const memeText = document.getElementById('memeText');
+  
+  // Archive Module Refs
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const gamePanes = document.querySelectorAll('.gamePane');
+
+
+  // ---- countdown (Kept the same) ----
+  const eventTs = new Date('December 11, 2025 11:00:00').getTime();
+  function pad(n){ return n.toString().padStart(2,'0'); }
+  function updateCountdown(){ 
+    const diff = eventTs - Date.now(); 
+    if(diff<=0){ 
+      daysEl.textContent='00'; hoursEl.textContent='00'; minsEl.textContent='00'; secsEl.textContent='00'; 
+      return; 
+    } 
+    const d=Math.floor(diff/(1000*60*60*24)); 
+    const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60)); 
+    const m=Math.floor((diff%(1000*60*60))/(1000*60)); 
+    const s=Math.floor((diff%(1000*60))/1000); 
+    
+    daysEl.textContent=pad(d); 
+    hoursEl.textContent=pad(h); 
+    minsEl.textContent=pad(m); 
+    secsEl.textContent=pad(s); 
+  }
+  updateCountdown(); 
+  setInterval(updateCountdown,1000);
+
+  // ---- render lines (text animation) ----
+  function renderLines(){ 
+    linesBox.innerHTML=''; 
+    let i=0; 
+    function next(){ 
+      if(i>=LINES.length) return; 
+      const d=document.createElement('div'); 
+      d.className='line'; 
+      d.textContent=LINES[i]; 
+      linesBox.appendChild(d); 
+      i++; 
+      linesBox.scrollTop = linesBox.scrollHeight;
+      setTimeout(next,900);
+    } 
+    next(); 
+  }
+
+  // ---- handlers (Updated speech command) ----
+  startBtn.addEventListener('click', ()=>{ 
+    const name=nameInput.value.trim(); 
+    if(!name){ 
+      nameInput.focus(); 
+      nameInput.style.boxShadow='0 0 0 4px rgba(255,204,0,0.12)'; 
+      setTimeout(() => nameInput.style.boxShadow = '', 1000); 
+      return; 
+    } 
+    // UPDATED HEADING
+    document.getElementById('inviteTitle').textContent = `Welcome ${name}! Let's Get This Party Started! 🥳`; 
+    // UPDATED SPEECH
+    speak(`Welcome, ${name}! Your seniors are thrilled to invite you to the combined Freshers' Welcome, Teachers' Day, and Farewell event.`); 
+    renderLines(); 
+  });
+  // CHANGED NAMASTE TO HELLO
+  playHello.addEventListener('click', ()=>{ speak('Hello there, Fresher!'); }); 
+
+  venueBtn.addEventListener('click', ()=>{ typeText(detailBox, VENUE); speak(VENUE); });
+  dateBtn.addEventListener('click', ()=>{ typeText(detailBox, DATE); speak(DATE); });
+  timeBtn.addEventListener('click', ()=>{ typeText(detailBox, TIME); speak(TIME); });
+  messageBtn.addEventListener('click', ()=>{ typeText(detailBox, SPECIAL); speak(SPECIAL); });
+
+  continueBtn.addEventListener('click', ()=>{ 
+    stopSpeech(); 
+    speak('Awesome! We are excited to have you join us. See you at the event!'); 
+    document.body.innerHTML = `
+      <div class="fullmsg">
+        <h2>Awesome! We are excited to have you join us. See you at the event! 🎉</h2>
+      </div>
+    `; 
+  });
+
+  // ---- FUNNY GIF/MEME CONTENT (Updated to use emojis for visual change) ----
+  const EMOJI_MEMES = [
+    // Changed the first element to be the actual large emoji for the display.
+    {emoji:'😂', msg:"When you realize college canteen food is better than your hostel mess. (A true Indian college experience!)"},
+    {emoji:'🏃‍♂️', msg:"Me trying to attend the 8 AM class after staying up all night on YouTube."},
+    {emoji:'🤦‍♀️', msg:"That first class when the professor asks if you know C++. (I know C--) "},
+    {emoji:'🤓', msg:"'Just attend all the classes.' - Me, the senior who attended three classes last semester. "},
+    {emoji:'🤯', msg:"When you check the 1st semester syllabus and it looks like a foreign language. "},
+    {emoji:'🤫', msg:"'Attendance is just a number.' - Said every senior before graduation day. (Don't listen to us!)"},
+    {emoji:'🧭', msg:"Me trying to find the Physics lab on the first day (It was in the building I ignored). "},
+    {emoji:'🤝', msg:"That moment when you realize you have to make friends to survive group projects. "},
+    {emoji:'🕺', msg:"See you all at the Freshers' party! Get ready to dance until the DJ quits. "}
+  ];
+  
+  let emojiIdx = 0;
+  function showEmoji(idx){ 
+    const item = EMOJI_MEMES[idx % EMOJI_MEMES.length]; 
+    // Set the content to the large emoji for visual change
+    emojiDisplay.textContent = item.emoji;
+    memeText.textContent = item.msg; 
+    // Optional: Add a subtle flash effect to mimic a GIF loading
+    emojiDisplay.style.transition = 'none';
+    emojiDisplay.style.opacity = 0;
+    setTimeout(() => {
+        emojiDisplay.style.transition = 'opacity 0.4s';
+        emojiDisplay.style.opacity = 1;
+    }, 50);
+    
+    speak(`Funny message: ${item.msg}`);
+  }
+  
+  newMemeBtn.addEventListener('click', ()=>{ 
+    emojiIdx++; 
+    showEmoji(emojiIdx); 
+  });
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    if (EMOJI_MEMES.length > 0) {
+      showEmoji(0);
+    }
+  });
+
+
+  // ---- INTERACTIVE GAME LOGIC (Kept the same) ----
+
+  // --- TAB SWITCHING ---
+  tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          gamePanes.forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const gameId = btn.getAttribute('data-game');
+          document.getElementById(gameId).classList.add('active');
+          speak(`Switched to ${btn.textContent.trim()}`);
+      });
+  });
+
+  // --- GAME 1: TIC-TAC-TOE LOGIC ---
+  const board = document.getElementById('board');
+  const cells = document.querySelectorAll('.cell');
+  const statusDisplay = document.getElementById('tictactoe-status');
+  const resetButton = document.getElementById('tictactoe-reset-btn');
+  let gameBoard = ["", "", "", "", "", "", "", "", ""];
+  let currentPlayer = "X";
+  let gameActive = true;
+
+  const winningConditions = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+  ];
+
+  function handleCellPlayed(clickedCell, clickedCellIndex) {
+      gameBoard[clickedCellIndex] = currentPlayer;
+      clickedCell.innerHTML = currentPlayer;
+  }
+
+  function handleResultValidation() {
+      let roundWon = false;
+      for (let i = 0; i < winningConditions.length; i++) {
+          const winCondition = winningConditions[i];
+          let a = gameBoard[winCondition[0]];
+          let b = gameBoard[winCondition[1]];
+          let c = gameBoard[winCondition[2]];
+
+          if (a === '' || b === '' || c === '') continue;
+
+          if (a === b && b === c) {
+              roundWon = true;
+              break;
+          }
+      }
+
+      if (roundWon) {
+          statusDisplay.innerHTML = `${currentPlayer} **Wins!** 🎉`;
+          gameActive = false;
+          if (currentPlayer === "X") speak("Congratulations! You won the game!");
+          else speak("The System won. Better luck next time!");
+          return;
+      }
+
+      if (!gameBoard.includes("")) {
+          statusDisplay.innerHTML = `It's a **Draw!** 🤝`;
+          gameActive = false;
+          speak("It's a draw!");
+          return;
+      }
+  }
+
+  function handleCellClick(clickedCellEvent) {
+      const clickedCell = clickedCellEvent.target;
+      const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
+
+      if (gameBoard[clickedCellIndex] !== "" || !gameActive || currentPlayer === "O") return;
+
+      handleCellPlayed(clickedCell, clickedCellIndex);
+      handleResultValidation();
+      
+      if (gameActive) {
+          currentPlayer = "O";
+          statusDisplay.innerHTML = `Current turn: O (System)`;
+          setTimeout(computerMove, 500); 
+      }
+  }
+
+  function computerMove() {
+      if (!gameActive) return;
+
+      let availableIndices = [];
+      for(let i=0; i<gameBoard.length; i++) {
+          if(gameBoard[i] === "") availableIndices.push(i);
+      }
+
+      if (availableIndices.length > 0) {
+          const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+          const cell = document.querySelector(`.cell[data-index="${randomIndex}"]`);
+          
+          handleCellPlayed(cell, randomIndex);
+          handleResultValidation();
+
+          currentPlayer = "X";
+          if (gameActive) statusDisplay.innerHTML = `Current turn: X (You)`;
+      }
+  }
+
+  function handleRestartGame() {
+      gameActive = true;
+      currentPlayer = "X";
+      gameBoard = ["", "", "", "", "", "", "", "", ""];
+      statusDisplay.innerHTML = `Current turn: X (You)`;
+      cells.forEach(cell => cell.innerHTML = "");
+      speak("New Tic Tac Toe game started.");
+  }
+
+  cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+  resetButton.addEventListener('click', handleRestartGame);
+
+
+  // --- GAME 2: NUMBER GUESSING GAME LOGIC ---
+  const guessInput = document.getElementById('guess-input');
+  const guessBtn = document.getElementById('guess-btn');
+  const guessResult = document.getElementById('guess-result');
+  const guessTries = document.getElementById('guess-tries');
+  const guessResetBtn = document.getElementById('guess-reset-btn');
+
+  let secretNumber;
+  let triesLeft;
+
+  function initGuessGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      triesLeft = 7;
+      guessInput.value = '';
+      guessInput.disabled = false;
+      guessBtn.disabled = false;
+      guessResult.textContent = 'Start by entering a number above!';
+      guessTries.textContent = `Tries remaining: ${triesLeft}`;
+      speak(`New number guessing game started. Guess a number between 1 and 100. You have ${triesLeft} tries.`);
+  }
+
+  function checkGuess() {
+      const userGuess = parseInt(guessInput.value);
+
+      if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+          guessResult.textContent = 'Please enter a valid number between 1 and 100.';
+          return;
+      }
+
+      triesLeft--;
+
+      if (userGuess === secretNumber) {
+          guessResult.textContent = `🎉 Correct! The number was ${secretNumber}. You win!`;
+          guessInput.disabled = true;
+          guessBtn.disabled = true;
+          speak(`Correct! The number was ${secretNumber}. You win!`);
+      } else if (triesLeft === 0) {
+          guessResult.textContent = `Game Over! The number was ${secretNumber}. Try again!`;
+          guessInput.disabled = true;
+          guessBtn.disabled = true;
+          speak(`Game Over. The number was ${secretNumber}.`);
+      } else if (userGuess < secretNumber) {
+          guessResult.textContent = 'Too low! Try a higher number.';
+          speak('Too low.');
+      } else {
+          guessResult.textContent = 'Too high! Try a lower number.';
+          speak('Too high.');
+      }
+      
+      guessTries.textContent = `Tries remaining: ${triesLeft}`;
+  }
+
+  guessBtn.addEventListener('click', checkGuess);
+  guessResetBtn.addEventListener('click', initGuessGame);
+  initGuessGame();
+
+
+  // --- GAME 3: ROCK PAPER SCISSORS LOGIC ---
+  const rpsOptions = document.querySelectorAll('#rps-options button');
+  const rpsResult = document.getElementById('rps-result');
+  const rpsScoreDisplay = document.getElementById('rps-score');
+  const rpsResetBtn = document.getElementById('rps-reset-btn');
+
+  let rpsScore = { player: 0, system: 0 };
+  const rpsMoves = ['rock', 'paper', 'scissors'];
+
+  function getSystemMove() {
+      const randomIndex = Math.floor(Math.random() * 3);
+      return rpsMoves[randomIndex];
+  }
+
+  function determineRPSWinner(playerMove, systemMove) {
+      if (playerMove === systemMove) return 'draw';
+      if (
+          (playerMove === 'rock' && systemMove === 'scissors') ||
+          (playerMove === 'paper' && systemMove === 'rock') ||
+          (playerMove === 'scissors' && systemMove === 'paper')
+      ) return 'player';
+      return 'system';
+  }
+
+  function updateRPSScoreDisplay() {
+      rpsScoreDisplay.textContent = `Score: Player ${rpsScore.player} - System ${rpsScore.system}`;
+  }
+
+  function handleRPSPlay(playerMove) {
+      const systemMove = getSystemMove();
+      const winner = determineRPSWinner(playerMove, systemMove);
+
+      let resultText;
+      let speechText;
+
+      if (winner === 'player') {
+          rpsScore.player++;
+          resultText = `You played ${playerMove.toUpperCase()} vs System played ${systemMove.toUpperCase()}. **You Win!** ✅`;
+          speechText = "You win!";
+      } else if (winner === 'system') {
+          rpsScore.system++;
+          resultText = `You played ${playerMove.toUpperCase()} vs System played ${systemMove.toUpperCase()}. **System Wins!** ❌`;
+          speechText = "The System wins.";
+      } else {
+          resultText = `You played ${playerMove.toUpperCase()} vs System played ${systemMove.toUpperCase()}. **It's a Draw!** 🤝`;
+          speechText = "It's a draw!";
+      }
+
+      rpsResult.innerHTML = resultText;
+      updateRPSScoreDisplay();
+      speak(speechText);
+  }
+
+  rpsOptions.forEach(button => {
+      button.addEventListener('click', (e) => handleRPSPlay(e.target.dataset.move));
+  });
+
+  rpsResetBtn.addEventListener('click', () => {
+      rpsScore = { player: 0, system: 0 };
+      rpsResult.textContent = 'Score reset. Make your move!';
+      updateRPSScoreDisplay();
+      speak("Rock, paper, scissors score reset.");
+  });
+
+  updateRPSScoreDisplay();
+
+  // ---- END INTERACTIVE GAME LOGIC ----
+
+
+  // stop speech on hide
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden) stopSpeech(); });
+
+  // try small auto-speak after first interaction
+  let didAuto=false; 
+  function tryAuto(){ 
+    if(didAuto) return; 
+    didAuto=true; 
+    // CHANGED NAMASTE TO HELLO
+    try{ speak('Hello, Fresher!'); }catch(e){} 
+    window.removeEventListener('click', tryAuto); 
+    window.removeEventListener('touchstart', tryAuto); 
+  }
+  window.addEventListener('click', tryAuto); 
+  window.addEventListener('touchstart', tryAuto, {passive:true});
+
+</script>
+</body>
+</html>
